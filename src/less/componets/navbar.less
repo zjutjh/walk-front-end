@@ -1,0 +1,15 @@
+
+.navbar-link {
+
+  color: @fullWhite;
+  height: 100%;
+  padding: 0 10px ;
+  //vertical-align: middle;
+  &:hover{
+    background-color: @darkerPrimaryColor;
+  }
+  &[class~='active']{
+    background-color: darken(@darkerPrimaryColor,60%);
+  }
+}
+
