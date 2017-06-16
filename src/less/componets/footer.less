@@ -1,13 +1,26 @@
 footer{
-  margin-top: 20px;
-  height: 120px;
+  position: relative;
+  //margin-top: 20px;
+  height: 150px;
   width: 100%;
+
   background-color: @lighterPrimaryColor;
-  padding-top: 20px;
+
 }
-footer .foot-container{
+footer .foot-wrapper{
+  position: absolute;
+  display: table;
+  vertical-align: middle;
+
+  bottom:0;
+  left: 0;
   height: 100px;
   //margin-top: 20px;
   width: 100%;
+  color:@revTextColor;
   background-color: @primaryColor;
+}
+footer .foot-wrapper .foot-container{
+  display: table-cell;
+  vertical-align: middle;
 }

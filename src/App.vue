@@ -26,6 +26,7 @@
 <script>
   import NavBar from './components/navbar.vue';
   import MFooter from './components/footer.vue'
+  import {DispatchActions} from './store/'
   export default {
     name: 'app',
     data(){
@@ -33,7 +34,16 @@
 
       }
     },
-
+    methods:{
+      testLogin(){
+          this.$store.dispatch(DispatchActions.GET_ISLOGIN).then(response=>{
+            console.log(response.body)
+          })
+      }
+    },
+    mounted:function () {
+     this.testLogin();
+    },
     components:{
       NavBar,
       MFooter

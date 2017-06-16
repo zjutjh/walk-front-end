@@ -5,10 +5,10 @@
 
 // 修改基础变量
 
-@primaryColor: #474a4f;
-@darkerPrimaryColor: #7e848c;
-@lighterPrimaryColor: #bbbfc4;
-@accentColor: #ff5252;
+@primaryColor: #2196f3;
+@darkerPrimaryColor: darken(@primaryColor,10%);
+@lighterPrimaryColor: lighten(@primaryColor,10%);
+@accentColor: rgb(0,122,204);
 
 @textColor: #474a4f;
 @secondaryTextColor: #7e848c;
@@ -46,6 +46,13 @@
 ul{
   list-style: none;
 }
+.text-center{
+  text-align: center;
+}
+.dialog-button{
+  margin-left: 10px;
+}
+
 @import "~muse-ui/less/theme.less"; // 主题相关的样式
 @import './componets/navbar.less';
 @import "./componets/footer.less";

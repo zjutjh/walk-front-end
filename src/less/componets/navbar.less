@@ -1,4 +1,4 @@
-
+//@import "../theme.less";
 .navbar-link {
 
   color: @fullWhite;
@@ -9,7 +9,21 @@
     background-color: @darkerPrimaryColor;
   }
   &[class~='active']{
-    background-color: darken(@darkerPrimaryColor,60%);
+    background-color: darken(@darkerPrimaryColor,10%);
+  }
+}
+.navbar-logo-link{
+  &:link{
+    color:@revTextColor;
+  }
+  &:hover{
+    color:@revTextColor;
+  }
+  &:active{
+    color:@revTextColor;
+  }
+  &:visited{
+    color:@revTextColor;
   }
 }
 

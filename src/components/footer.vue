@@ -1,7 +1,10 @@
 <template>
   <footer>
-    <div class="foot-container">
-      1
+    <div class="foot-wrapper">
+      <div class="foot-container">
+        <p>111</p>
+      </div>
+
     </div>
   </footer>
 </template>
