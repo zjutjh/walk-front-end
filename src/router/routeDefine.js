@@ -3,6 +3,7 @@
  */
 import index from '@/components/views/index.vue'
 import myWalk from '@/components/views/myWalk.vue'
+import hello from '@/components/Hello.vue'
 const routes=[
     {
       path:'/',
@@ -18,6 +19,12 @@ const routes=[
       path: '/my-walk',
       name: '我的毅行',
       component: myWalk,
+      active:false
+    },
+    {
+      path:'/hello',
+      name:'test',
+      component:hello,
       active:false
     }
 ];
