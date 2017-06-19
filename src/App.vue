@@ -13,6 +13,7 @@
     left: 0;
     top: 0;
     width: 100%;
+    z-index: 9998;
   }
   #app{
     position: relative;
@@ -40,6 +41,9 @@
             console.log(response.body)
           })
       }
+    },
+    watch:{
+
     },
     mounted:function () {
      this.testLogin();

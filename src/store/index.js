@@ -16,13 +16,10 @@ const store = new Vuex.Store({
     state: {
       logged:false,
       loginUser:'',
-      token:sessionStorage.getItem('token') || '',
+      token:sessionStorage.getItem('token')||'',
     },
     actions: actions,
     mutations: {
-      getSessionToken(){
-        this.$store.state.token=sessionStorage.getItem('token') || ''
-      }
     },
     getters: {}
 });

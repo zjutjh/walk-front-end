@@ -20,17 +20,31 @@ function isPostAction(key) {
         return key.indexOf(action) == 0;
     });
 }
+const noNeedTokenList=['post_login','get_islogin'];
+function isNoNeedToken(key){
+    key=key.toLowerCase();
+    return noNeedTokenList.some(function (action) {
+      return key===action;
+    })
+}
 const vueInstance = new Vue;
 for (let action in APIS) {
     let isPost = isPostAction(action);
+    let token=sessionStorage.getItem('token')||'';
     let defaultQuery = {
         body  : {},
-        params: {token:'token'}
+        params: {token:token}
     };
     fetchApis[action] = function (store, queryData = defaultQuery) {
         // get请求{params: {}} post请求{body:{}}
         if(queryData.params['token']===undefined){
           queryData.params['token']=defaultQuery.params.token;
+        }
+        if(!isNoNeedToken(action)){
+          if(!sessionStorage.getItem('token')){
+            alert('登录已经过期，请重新登录');
+            return;
+          }
         }
         let copy4PostQuery = Object.assign({}, queryData);
         copy4PostQuery.params = {};

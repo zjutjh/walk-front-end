@@ -4,10 +4,10 @@ import './vendor.js'
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
+import vMediaQuery from 'v-media-query'
 import 'muse-ui/dist/muse-ui.css'
 import './less/theme.less'
-
+Vue.use(vMediaQuery);
 import {store} from './store'
 
 

@@ -1,7 +1,7 @@
 <template>
   <mu-appbar>
     <h1 slot="left"><router-link tag="a" class="navbar-logo-link" to="/index">毅行|{{pageName||'首页'}}</router-link></h1>
-    <router-link v-for="item in nbButGroup" :key="item.label"  :class="{active:item.active,'navbar-link':true}" tag="mu-flat-button" v-text="item.label" :to="item.href" slot="right"></router-link>
+    <router-link v-for="item in nbButGroup" v-if="item.name!==undefined" :key="item.name"  :class="{active:item.active,'navbar-link':true}" tag="mu-flat-button" v-text="item.name" :to="item.path" slot="right"></router-link>
     <template v-if="logged">
       <mu-flat-button :label="loginUserName" @click="unlogin" slot="right"/>
     </template>
@@ -15,6 +15,7 @@
 <script>
 //  import MuBottomNav from "../../node_modules/muse-ui/src/bottomNav/bottomNav";
   import LoginDialog from "./loginDialog.vue";
+  import routes from "../router/routeDefine.js"
   export default{
     components: {
         LoginDialog
@@ -23,18 +24,7 @@
 
       data(){
           return{
-            nbButGroup:[
-              {
-                  label:'首页',
-                  href:'/index',
-                  active:false,
-              },
-              {
-                label:'我的毅行',
-                href:'/my-walk',
-                active:false,
-              }
-            ],
+            nbButGroup:routes,
             pageName:'',
             loginDialogVisible:false,
             logged:false,
@@ -48,9 +38,9 @@
 //            console.log(route)
             let nbg=this.nbButGroup;
             for(let i in nbg){
-              if(nbg[i].href===routeName){
+              if(nbg[i].path===routeName){
                 nbg[i].active=true;
-                this.pageName=nbg[i].label;
+                this.pageName=nbg[i].name;
               }else{
                 nbg[i].active=false;
               }
