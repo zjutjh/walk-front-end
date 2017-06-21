@@ -29,6 +29,10 @@ const store = new Vuex.Store({
       },
       changeSignUpState(state,signUpState){
         state.signUpState=signUpState;
+      },
+      changeToken(state,token){
+        state.token=token;
+        sessionStorage.setItem('token',token);
       }
     },
     getters: {}

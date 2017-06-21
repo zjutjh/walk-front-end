@@ -50,7 +50,7 @@
       </mu-float-button>
       <div v-else>
         <mu-paper class="primary m-fix-paper" circle :zDepth="1">
-          <mu-circular-progress :size="40" class="vh-center" color="red"/>
+          <mu-circular-progress :size="40" class="vh-center" color="orange"/>
         </mu-paper>
       </div>
     </div>
