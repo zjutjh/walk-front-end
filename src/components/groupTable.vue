@@ -79,6 +79,8 @@
               ],
               showOperation:true,
               canOperation:true,
+              signUpState:false,
+              logged:false,
               total: 20,
               pageSize:1,
               current: 1,
@@ -142,6 +144,9 @@
         getIsLogged(){
             return this.$store.state.logged;
         },
+        getIsGrouped(){
+            return this.$store.state.signUpState;
+        },
         isBlur:function () {
           return ((this.loading || this.refreshing)&&!this.smallScreen);
         }
@@ -157,7 +162,16 @@
           },
           getIsLogged(val){
               console.log('logged');
-            this.showOperation=!!val && this.canOperation;
+              this.logged=!!val;
+            this.showOperation=!!val && this.canOperation && this.signUpState;
+          },
+          getIsGrouped(val){
+            if(val===''||val==='customer'){
+                this.signUpState=true;
+            }else{
+                this.signUpState=false;
+            }
+            this.showOperation=this.logged && this.canOperation && this.signUpState;
           },
           deep:true
       }

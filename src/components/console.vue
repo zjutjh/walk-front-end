@@ -1,17 +1,40 @@
 <template>
   <div>
     <mu-appbar>
-      <mu-flat-button class="big-icon-but" slot="right">
+      <mu-flat-button slot="left" class="normal-icon-but" @click="editPersonalInfo" >
+        <i class="iconfont icon-2x icon-xiugai"></i>
+      </mu-flat-button>
+      <mu-flat-button slot="left" class="normal-icon-but" @click="editIdCard">
+        <i class="iconfont icon-2x icon-shenfenzheng1"></i>
+      </mu-flat-button>
+      <mu-flat-button class="big-icon-but" slot="left">
 
         <mu-badge content="12" circle color="red">
           <i class="iconfont icon-2x icon-tixing"></i>
         </mu-badge>
       </mu-flat-button>
-      <mu-flat-button slot="left" class="normal-icon-but" >
+
+      <!--如果是游客-->
+      <mu-flat-button slot="right" v-if="signUpState===''||signUpState==='customer'" @click="addGroup" class="normal-icon-but">
+          <i class="iconfont icon-2x icon-xinzeng-copy"></i>
+      </mu-flat-button>
+      <!--如果是队员-->
+      <mu-flat-button slot="right" v-if="signUpState==='member'" @click="showGroupInfo" class="normal-icon-but">
+        <i class="iconfont icon-2x icon-chakan"></i>
+      </mu-flat-button>
+      <!--如果是队长-->
+      <mu-flat-button slot="right"  v-if="signUpState==='leader'" @click="deleteGroup" class="normal-icon-but">
+        <i class="iconfont icon-2x icon-delete"></i>
+      </mu-flat-button>
+      <mu-flat-button slot="right"  v-if="signUpState==='leader'" @click="editGroupInfo" class="normal-icon-but">
         <i class="iconfont icon-2x icon-xiugai"></i>
       </mu-flat-button>
-      <mu-flat-button slot="left" class="normal-icon-but" >
-        <i class="iconfont icon-2x icon-shenfenzheng1"></i>
+      <mu-flat-button slot="right"  v-if="signUpState==='leader'" @click="showGroupInfo" class="normal-icon-but">
+        <i class="iconfont icon-2x icon-chakan"></i>
+      </mu-flat-button>
+      <mu-flat-button slot="right" v-if="signUpState==='leader'" @click="triggerLock" class="normal-icon-but">
+        <i v-if="!locking" class="iconfont icon-2x" :class="{'icon-lock':isLocked,'icon-unlock':!isLocked,'red-text':isLocked}"></i>
+        <mu-circular-progress v-else :size="20" color="orange"/>
       </mu-flat-button>
 
     </mu-appbar>
@@ -20,6 +43,51 @@
 <script>
   export default{
       name:'Console',
+      data(){
+          return{
+              signUpState:'leader',
+              isLocked:true,
+              locking:false,
+          }
+      },
+      methods:{
+          triggerLock(){
+              if(this.locking)return;
+            this.locking=true;
+            let that=this;
+            setTimeout(function () {
+              that.locking=false;
+              that.isLocked=!that.isLocked;
+            },2000)
+          },
+          editPersonalInfo(){
 
+          },
+          editIdCard(){
+
+          },
+          deleteGroup(){
+
+          },
+          addGroup(){
+
+          },
+          editGroupInfo(){
+
+          },
+          showGroupInfo(){
+
+          }
+      },
+      computed:{
+        getSignUpInfo() {
+          return this.$store.state.signUpState;
+        }
+      },
+      watch:{
+        getSignUpInfo(val){
+            this.signUpState=val;
+        }
+      }
   }
 </script>

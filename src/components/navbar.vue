@@ -54,10 +54,16 @@
               console.log('closed');
               this.loginDialogVisible=false;
         },
+
         unlogin(){
             let canUnlogin=confirm('确定要退出登录吗');
             if(canUnlogin){
-              this.$store.state.logged=false;
+              this.$store.commit('changeLogInfo',{
+                  logged:false,
+                loginUser:'',
+                signUpState:''
+              });
+
             }
 
         }

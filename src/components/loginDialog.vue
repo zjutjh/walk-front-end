@@ -66,8 +66,12 @@
             }).then(response=>{
                 console.log('success');
                 that.logging=false;
-                that.$store.state.logged=true;
-                that.$store.state.loginUser=response.body.data.accountName;
+//                that.$store.state.logged=true;
+//                that.$store.state.loginUser=response.body.data.accountName;
+                that.$store.commit('changeLogInfo',{logged:true,
+                                                    loginUser:response.body.data.accountName,
+                                                    signUpState:''
+                                                    });
                 that.loginDialogClose();
             }).catch(response=>{
               that.logging=false;

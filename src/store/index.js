@@ -16,10 +16,20 @@ const store = new Vuex.Store({
     state: {
       logged:false,
       loginUser:'',
+      signUpState:'',
       token:sessionStorage.getItem('token')||'',
     },
     actions: actions,
     mutations: {
+      changeLogInfo(state,payload){
+        // console.log(payload)
+        state.logged=!!payload.logged;
+        state.loginUser=payload.loginUser;
+        state.signUpState=payload.signUpState;
+      },
+      changeSignUpState(state,signUpState){
+        state.signUpState=signUpState;
+      }
     },
     getters: {}
 });

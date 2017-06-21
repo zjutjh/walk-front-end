@@ -3,7 +3,10 @@
     <div class="m-bigImg">
     </div>
     <div class="m-content padding20">
-      <console class=" margin-top10"></console>
+      <div class="margin-top10" v-if="logged">
+        <console></console>
+      </div>
+
       <group-table></group-table>
     </div>
     <div class="m-bigImg">
@@ -16,8 +19,27 @@
   export default{
     data(){
         return{
-
+          logged:false
         }
+    },
+    methods:{
+      testLogin(){
+        this.logged=this.$store.state.logged;
+      },
+    },
+    mounted:function () {
+      this.testLogin();
+    },
+    computed:{
+      getLogInfo() {
+        return this.$store.state.logged;
+      }
+    },
+    watch:{
+      getLogInfo(val){
+        this.logged=!!val;
+        this.testLogin();
+      }
     },
     components:{
         GroupTable,
