@@ -38,16 +38,24 @@
       </mu-flat-button>
 
     </mu-appbar>
+    <edit-dialog :show-dialog.sync="dialogVisible" :dialog-title="dialogTitle"></edit-dialog>
   </div>
 </template>
 <script>
+  import EditDialog from './editDialog.vue';
+
   export default{
+      components:{
+          EditDialog
+      },
       name:'Console',
       data(){
           return{
               signUpState:'leader',
               isLocked:true,
               locking:false,
+              dialogVisible:false,
+              dialogTitle:'编辑'
           }
       },
       methods:{
@@ -60,8 +68,12 @@
               that.isLocked=!that.isLocked;
             },2000)
           },
+          showDialog(dialogTitle){
+            this.dialogTitle=dialogTitle;
+            this.dialogVisible=true;
+          },
           editPersonalInfo(){
-
+            this.showDialog('编辑个人信息');
           },
           editIdCard(){
 
@@ -70,7 +82,7 @@
 
           },
           addGroup(){
-
+            this.showDialog('新增队伍');
           },
           editGroupInfo(){
 

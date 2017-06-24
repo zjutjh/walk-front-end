@@ -45,7 +45,7 @@
 
       <mu-infinite-scroll :loadingText="loadingText" v-if="smallScreen" :scroller="scroller" :loading="loading" @load="loadMore"/>
     <div class="sm-hide fix-but-container">
-      <mu-float-button v-if="!refreshing" @click="refresh">
+      <mu-float-button v-if="!(!smallScreen && (loading || refreshing))" @click="refresh">
         <i class="iconfont icon-2x icon-shuaxin"></i>
       </mu-float-button>
       <div v-else>
@@ -61,22 +61,10 @@
 <script>
   export default{
       name:'GroupTable',
-      prop:['groupData','canOperate'],
+      props:['groupData','canOperate','currentPage','totalPage'],
       data(){
           return {
-              tableData:[
-                {id:1,description:'667',area:'zhaohui',max_num:4,now_num:1,pre_num:20},
-                {id:2,description:'667',area:'zhaohui',max_num:4,now_num:1,pre_num:20},
-                {id:3,description:'667',area:'zhaohui',max_num:4,now_num:1,pre_num:20},
-                {id:4,description:'667',area:'zhaohui',max_num:4,now_num:1,pre_num:20},
-                {id:5,description:'667',area:'zhaohui',max_num:4,now_num:1,pre_num:20},
-                {id:6,description:'667',area:'zhaohui',max_num:4,now_num:1,pre_num:20},
-                {id:7,description:'667',area:'zhaohui',max_num:4,now_num:1,pre_num:20},
-                {id:8,description:'667',area:'zhaohui',max_num:4,now_num:1,pre_num:20},
-                {id:9,description:'667',area:'zhaohui',max_num:4,now_num:1,pre_num:20},
-                {id:10,description:'667',area:'zhaohui',max_num:4,now_num:1,pre_num:20},
-                {id:11,description:'667',area:'zhaohui',max_num:4,now_num:1,pre_num:20},
-              ],
+              tableData:[],
               showOperation:true,
               canOperation:true,
               signUpState:false,
@@ -100,6 +88,8 @@
         if(!this.$store.state.logged){
           this.showOperation=false;
         }
+        this.tableData=this.groupData;
+
       },
       methods:{
         handlePageChange(newIndex) {
@@ -173,6 +163,12 @@
             }
             this.showOperation=this.logged && this.canOperation && this.signUpState;
           },
+        currentPage(val){
+              this.current=+val;
+        },
+        totalPage(val){
+          this.total=+val;
+        },
           deep:true
       }
 

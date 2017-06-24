@@ -2,15 +2,27 @@
 <template>
     <div>
       <!--bigImg-->
-      <div class="m-bigImg">1112</div>
+      <div class="m-img-container">
+        <img class="m-bigImg" src="http://fpoimg.com/1254x400"/>
+      </div>
       <!--yxInfo-->
       <div class="m-yxInfo">
         <mu-row>
           <mu-col width="50" tablet="50" desktop="50">
-            <span class="m-yxInfo-span">{{nowYxNum}}</span>
+            <span class="m-yxInfo-span">{{yxInfo.nowNum}}</span>
           </mu-col>
           <mu-col width="50" tablet="50" desktop="50">
-            <span class="m-yxInfo-span">{{endTime}}</span>
+            <span class="m-yxInfo-span">{{yxInfo.date}}</span>
+          </mu-col>
+        </mu-row>
+      </div>
+      <div class="m-webInfo">
+        <mu-row>
+          <mu-col width="50" tablet="50" desktop="50">
+            <span class="m-webInfo-span">{{webInfo.state}}</span>
+          </mu-col>
+          <mu-col width="50" tablet="50" desktop="50">
+            <span class="m-webInfo-span">{{webInfo.signInTime}}</span>
           </mu-col>
         </mu-row>
       </div>
@@ -41,8 +53,14 @@
   export default{
     data(){
         return{
-            nowYxNum:'123456',
-          endTime:'2019-2-30',
+          yxInfo:{
+            nowNum:'2334',
+            date:'2019-2-30'
+          },
+          webInfo:{
+            state:'报名已经结束',
+            signInTime:'2018-2-20 2019-1-20'
+          },
           timeLineData:timeLineData.data
         }
     },
