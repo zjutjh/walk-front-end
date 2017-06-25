@@ -39,14 +39,17 @@
 
     </mu-appbar>
     <edit-dialog :show-dialog.sync="dialogVisible" :dialog-title="dialogTitle"></edit-dialog>
+    <info-dialog :show-dialog.sync="infoDialogVisible"></info-dialog>
   </div>
 </template>
 <script>
   import EditDialog from './editDialog.vue';
+  import InfoDialog from "./infoDialog";
 
   export default{
       components:{
-          EditDialog
+        InfoDialog,
+        EditDialog
       },
       name:'Console',
       data(){
@@ -55,7 +58,8 @@
               isLocked:true,
               locking:false,
               dialogVisible:false,
-              dialogTitle:'编辑'
+              dialogTitle:'编辑',
+              infoDialogVisible:false
           }
       },
       methods:{
@@ -76,7 +80,7 @@
             this.showDialog('编辑个人信息');
           },
           editIdCard(){
-
+            this.showDialog('编辑身份证信息');
           },
           deleteGroup(){
 
@@ -85,10 +89,10 @@
             this.showDialog('新增队伍');
           },
           editGroupInfo(){
-
+            this.showDialog('编辑队伍信息');
           },
           showGroupInfo(){
-
+            this.infoDialogVisible=true;
           }
       },
       computed:{
