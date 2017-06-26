@@ -2,13 +2,14 @@
   <div class="group-table-container">
     <div class="group-table-mask" v-if="!smallScreen && (loading || refreshing)">
       <mu-circular-progress class="vh-center" :size="90" />
-      <div class="glass-blur">&nbsp;</div>
+      <!--<div class="glass-blur">&nbsp;</div>-->
     </div>
     <mu-refresh-control v-if="smallScreen" :refreshing="refreshing" :trigger="scroller" @refresh="refresh"/>
     <div>
       <mu-table
         :showCheckbox="false"
         id="groupTableRef"
+        :class="{'glass-blur':isBlur}"
       >
         <mu-thead slot="header">
           <mu-tr>

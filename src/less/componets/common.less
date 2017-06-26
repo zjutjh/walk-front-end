@@ -35,28 +35,22 @@ ul{
 }
 @blur-radius:1px;
 .glass-blur{
-  background-color:rgba(240,240,240,.7);
-  position: absolute;
-  top: 0;
-  left:0;
-  height: 100%;
-  width:100%;
   -webkit-filter: blur(@blur-radius); /* Chrome, Opera */
   -moz-filter: blur(@blur-radius);
   -ms-filter: blur(@blur-radius);
   filter: blur(@blur-radius);
 }
-@media (min-width: 993px) {
+@media @desktop {
   .padding20{
     padding: 0 20%;
   }
 }
-@media (max-width: 992px) and (min-width: 601px){
+@media @tablet{
   .padding20{
     padding: 0 10%;
   }
 }
-@media (max-width: 600px){
+@media @mobile{
   .mu-badge-circle{
     width: 18px;
     height: 18px;
@@ -78,7 +72,6 @@ ul{
     padding-right: 4px;
     text-align: center;
   }
-
   .mu-raised-button-label {
     vertical-align: middle;
     padding-right: 3px;
