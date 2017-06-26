@@ -25,7 +25,8 @@
       <!--如果是队长-->
       <template v-if="signUpState==='leader'">
         <mu-flat-button slot="right"  @click="deleteGroup" class="normal-icon-but">
-          <i class="iconfont icon-2x icon-delete"></i>
+          <i class="iconfont icon-2x icon-delete" v-if="!deleting"></i>
+          <mu-circular-progress v-else :size="20" color="orange"/>
         </mu-flat-button>
         <mu-flat-button slot="right" @click="editGroupInfo" class="normal-icon-but">
           <i class="iconfont icon-2x icon-xiugai"></i>
@@ -63,17 +64,20 @@
               dialogVisible:false,
               dialogTitle:'编辑',
               dialogActionType:'',
-              infoDialogVisible:false
+              infoDialogVisible:false,
+              deleting:false
           }
       },
       methods:{
         triggerLock(){
+            let lockState=['解锁','锁定'];
               if(this.locking)return;
             this.locking=true;
             let that=this;
             setTimeout(function () {
               that.locking=false;
               that.isLocked=!that.isLocked;
+              that.$toasted.info('队伍'+lockState[+that.isLocked]+'成功');
             },2000)
           },
           showDialog(dialogTitle,dialogActionType){
@@ -89,7 +93,18 @@
             this.showDialog('编辑身份证信息','idcard');
           },
           deleteGroup(){
+            let canDel=confirm("确定要删除这个队伍吗？这个操作不可逆！");
+            let that=this;
+            if(canDel){
+                this.deleting=true;
 
+                setTimeout(function () {
+                  that.deleting=false;
+                  that.$toasted.success('删除成功');
+                },2000);
+            }else{
+                this.$toasted.info('用户取消了删除');
+            }
           },
           addGroup(){
             if(!this.$store.state.idcardFilled){
