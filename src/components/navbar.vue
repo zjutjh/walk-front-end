@@ -51,7 +51,7 @@
               this.loginUserName=this.$store.state.loginUser;
           },
         dialogClosed(){
-              console.log('closed');
+//              console.log('closed');
               this.loginDialogVisible=false;
         },
 

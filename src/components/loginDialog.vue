@@ -20,10 +20,14 @@
   </mu-dialog>
 </template>
 <script>
-  import {DispatchActions} from '../store/'
+  import {DispatchActions} from '../store/';
+
   export default{
       name:"LoginDialog",
       props:['showLoginDialog'],
+      components:{
+
+      },
       data(){
           return{
             loginForm:{
@@ -64,7 +68,7 @@
                     password:this.loginForm.password
                 }
             }).then(response=>{
-                console.log('success');
+//                console.log('success');
                 that.logging=false;
 //                that.$store.state.logged=true;
 //                that.$store.state.loginUser=response.body.data.accountName;
@@ -73,6 +77,7 @@
                                                     signUpState:''
                                                     });
                 that.loginDialogClose();
+                that.$toasted.success("登录成功");
             }).catch(response=>{
               that.logging=false;
             });

@@ -67,7 +67,7 @@
           }
       },
       methods:{
-          triggerLock(){
+        triggerLock(){
               if(this.locking)return;
             this.locking=true;
             let that=this;
@@ -92,6 +92,10 @@
 
           },
           addGroup(){
+            if(!this.$store.state.idcardFilled){
+              alert('请先填写身份证信息');
+              return;
+            }
             this.showDialog('新增队伍','groupInfo');
           },
           editGroupInfo(){

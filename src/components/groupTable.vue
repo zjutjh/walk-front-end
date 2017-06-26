@@ -97,6 +97,10 @@
             this.getGroupByPage(+newIndex,false)
         },
         joinGroup(){
+          if(!this.$store.state.idcardFilled){
+            alert('请先填写身份证信息');
+            return;
+          }
 //            console.log(this)
         },
         getGroupByPage:function(pageIndex,isRefresh){
@@ -152,7 +156,7 @@
             this.canOperation=!!val
           },
           getIsLogged(val){
-              console.log('logged');
+//              console.log('logged');
               this.logged=!!val;
             this.showOperation=!!val && this.canOperation && this.signUpState;
           },

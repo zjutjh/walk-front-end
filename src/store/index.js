@@ -17,6 +17,7 @@ const store = new Vuex.Store({
       logged:false,
       loginUser:'',
       signUpState:'',
+      idcardFilled:false,
       token:sessionStorage.getItem('token')||'',
     },
     actions: actions,
@@ -33,6 +34,9 @@ const store = new Vuex.Store({
       changeToken(state,token){
         state.token=token;
         sessionStorage.setItem('token',token);
+      },
+      changeIdcardFilled(state,isFilled){
+        state.idcardFilled=!!isFilled;
       }
     },
     getters: {}

@@ -7,16 +7,15 @@ import router from './router'
 import vMediaQuery from 'v-media-query'
 import 'muse-ui/dist/muse-ui.css'
 import './less/theme.less'
+
+
 Vue.use(vMediaQuery);
 import {store} from './store'
 
 
 // import 'muse-ui/dist/theme-carbon.css'
 
-
-
 Vue.config.productionTip = false
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
