@@ -2,17 +2,17 @@
   <mu-bottom-sheet :open="isShow" @close="close">
     <mu-list>
       <mu-sub-header >队长</mu-sub-header>
-      <mu-list-item inset :title="groupInfo.leader.name">
+      <mu-list-item inset :title="groupInfoShow.leader.name">
         <span slot="describe">
           <mu-row>
             <mu-col width="50" tablet="50" desktop="50">
               <span class="info-phone-span">
-                {{groupInfo.leader.phone}}
+                {{groupInfoShow.leader.phone}}
              </span>
             </mu-col>
             <mu-col width="50" tablet="50" desktop="50">
               <span class="info-qq-span">
-                {{groupInfo.leader.qq}}
+                {{groupInfoShow.leader.qq}}
               </span>
             </mu-col>
           </mu-row>
@@ -20,7 +20,7 @@
       </mu-list-item>
       <mu-divider/>
       <mu-sub-header >队员</mu-sub-header>
-      <mu-list-item inset v-for="item,index in groupInfo.teammate" :key="index" :title="item.name">
+      <mu-list-item inset v-for="item,index in groupInfoShow.teammate" :key="index" :title="item.name">
         <span slot="describe">
           <mu-row>
             <mu-col width="50" tablet="50" desktop="50">
@@ -46,11 +46,11 @@
 
     },
     name:'InfoDialog',
-      props:['showDialog'],
+      props:['showDialog','groupInfo'],
       data(){
           return{
             isShow:false,
-            groupInfo:{
+            groupInfoShow:{
                 leader:{
                     name:'112',
                     qq:'113',
@@ -84,7 +84,12 @@
       watch:{
           showDialog(val){
               this.isShow=!!val;
-          }
+          },
+          groupInfo(val){
+              this.groupInfo=val;
+          },
+          deep:true,
+
       }
 
   }

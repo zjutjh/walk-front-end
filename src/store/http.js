@@ -11,7 +11,9 @@ Vue.http.options.emulateJSON = true;
 const requestDebug = true;
 // interceptors
 Vue.http.interceptors.push(function(request, next) {
+
     next((response)=>{
+      console.log(response)
         switch (response.status) {
             case 200:
               // console.log(response.body);
@@ -26,9 +28,11 @@ Vue.http.interceptors.push(function(request, next) {
             case 404:
                 notify('error', '访问地址或服务不存在', this);
                 break;
+            case 0  :
             case 500:
             case 501:
             case 502:
+
                 notify('error', '服务暂时不可用', this);
                 break;
             default:
@@ -46,5 +50,5 @@ function getVueInstance(){
 }
 function notify(type, msg, instance){
     instance = instance || getVueInstance();
-    requestDebug && alert(msg);
+    requestDebug && instance.$toasted.error(msg);
 }

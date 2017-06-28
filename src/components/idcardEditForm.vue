@@ -7,7 +7,7 @@
 <script>
   export default{
       name:'idcardEditForm',
-      props:['value','isLoading'],
+      props:['value'],
       data(){
           return{
               idcardNum:'',
@@ -17,14 +17,13 @@
           }
       },
       methods:{
-
         checkIdcardNum(value){
-          let isOk=0;
+          let isOk=0;//0为通过 否则为不通过
 //          console.log(value);
           if(typeof value==='object'){
               value='';
           }
-          let icnr=value||this.idcardNumRepeat;
+          let icnr=value||this.idcardNumRepeat;//是否是输入状态
           if(this.idcardNum===''){
               this.idcardNumError='请填写身份证信息';
               isOk++;
@@ -44,10 +43,5 @@
           }
         }
       },
-    watch:{
-      isLoading(val){
-          this.loading=!!val;
-      }
-    }
   }
 </script>

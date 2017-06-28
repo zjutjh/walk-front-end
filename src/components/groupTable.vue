@@ -9,8 +9,8 @@
       <mu-table
         :showCheckbox="false"
         id="groupTableRef"
-        :class="{'glass-blur':isBlur}"
-      >
+        class="blur-table"
+        :class="{'glass-blur':isBlur}">
         <mu-thead slot="header">
           <mu-tr>
             <mu-th tooltip="组号">组号</mu-th>
@@ -26,14 +26,19 @@
             <mu-td>{{item.description}}</mu-td>
             <mu-td>{{item.area}}</mu-td>
             <mu-td>
-              <mu-badge :content="item.now_num+ '/' +item.max_num"/>
-              <mu-badge :content="''+item.pre_num" color="red"/>
+              <mu-badge :color="item.payloadColor" :content="item.now_num+ '/' +item.max_num"/>
+              <mu-badge :content="(item.pre_num>10?'':'0')+item.pre_num" color="orange"/>
+              <mu-badge>
+                <i class="iconfont" style="font-size: 12px" :class="{'icon-lock':item.locked,'icon-unlock':!item.locked,'red-text':item.locked}"></i>
+
+              </mu-badge>
+
             </mu-td>
             <!--<mu-td>{{item.max_num}}</mu-td>-->
             <!--<mu-td>{{item.now_num}}</mu-td>-->
             <!--<mu-td>{{item.pre_num}}</mu-td>-->
             <mu-td v-if="showOperation">
-              <mu-raised-button label="加入" @click="joinGroup" :group-id="item.id" primary/>
+              <mu-raised-button label="加入" @click="joinGroup" :group-id="item.id" primary :disabled="item.isDisable"/>
             </mu-td>
           </mu-tr>
         </mu-tbody>
@@ -60,6 +65,7 @@
   </div>
 </template>
 <script>
+
   export default{
       name:'GroupTable',
       props:['groupData','canOperate','currentPage','totalPage'],
@@ -150,7 +156,10 @@
       watch:{
         '$mq.resize': 'screenResize',
           groupData(val){
-              this.tableData=val;
+//            console.log(val)
+            console.log(val);
+            this.tableData=val;
+
           },
           canOperate(val){
             this.canOperation=!!val

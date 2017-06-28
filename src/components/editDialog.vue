@@ -1,3 +1,4 @@
+//编辑对话框
 <template>
   <mu-dialog dialogClass="full-width" :open="isShow" :title="dialog_title">
     <component v-if="!loading" v-model="formValue" :is="currentForm"></component>
