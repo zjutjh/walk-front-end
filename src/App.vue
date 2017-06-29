@@ -38,8 +38,15 @@
     methods:{
       testLogin(){
           this.$store.dispatch(DispatchActions.GET_ISLOGIN).then(response=>{
-            console.log(response.body)
-          })
+              console.log(response.body)
+            this.$store.commit('changeLogInfo',{logged:true,
+              loginUser:response.body.data.accountName,
+              signUpState:response.body.data.state,
+              loginType:response.body.data.type,
+              session:response.body.data.session
+            });
+            this.$toasted.success("登录成功");
+          }).catch()
       }
     },
     watch:{

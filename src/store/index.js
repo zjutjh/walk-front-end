@@ -16,9 +16,11 @@ const store = new Vuex.Store({
     state: {
       logged:false,
       loginUser:'',
+      loginType:'',
       signUpState:'',
       idcardFilled:false,
       token:sessionStorage.getItem('token')||'',
+
     },
     actions: actions,
     mutations: {
@@ -27,6 +29,8 @@ const store = new Vuex.Store({
         state.logged=!!payload.logged;
         state.loginUser=payload.loginUser;
         state.signUpState=payload.signUpState;
+        state.loginType=payload.loginType;
+        sessionStorage.setItem('token',payload.session)
       },
       changeSignUpState(state,signUpState){
         state.signUpState=signUpState;

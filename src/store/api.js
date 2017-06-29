@@ -5,13 +5,14 @@
 import Vue from 'vue'
 import './http'
 var fetchApis = {};
-var requestUrl="http://wapi.louisian.net";
+var requestUrl="http://localhost:3000";
 const APIS = {
-    GET_ISLOGIN:'/mywalk/account',
+    GET_ISLOGIN:'/my-walk/account',
     GET_YXNUM:'',
-    POST_LOGIN:'/mywalk/login/passport',
-
+    GET_LOGIN:'/my-walk/login',
+    GET_GROUP:'/my-walk/group',
 };
+const noNeedTokenList=['get_login','get_islogin'];
 const postPrefix = ['post', 'save', 'delete'];
 //将需要post的api写上post即可
 function isPostAction(key) {
@@ -20,7 +21,7 @@ function isPostAction(key) {
         return key.indexOf(action) == 0;
     });
 }
-const noNeedTokenList=['post_login','get_islogin'];
+
 function isNoNeedToken(key){
     key=key.toLowerCase();
     return noNeedTokenList.some(function (action) {

@@ -13,7 +13,7 @@ const requestDebug = true;
 Vue.http.interceptors.push(function(request, next) {
 
     next((response)=>{
-      console.log(response)
+      // console.log(response)
         switch (response.status) {
             case 200:
               // console.log(response.body);

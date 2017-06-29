@@ -62,24 +62,26 @@
             if(vaild)return;
             this.logging=true;
             let that=this;
-            this.$store.dispatch(DispatchActions.POST_LOGIN,{
+            this.$store.dispatch(DispatchActions.GET_LOGIN,{
                 params:{
                     username:this.loginForm.username,
                     password:this.loginForm.password
                 }
             }).then(response=>{
-//                console.log('success');
-                that.logging=false;
-//                that.$store.state.logged=true;
-//                that.$store.state.loginUser=response.body.data.accountName;
-                that.$store.commit('changeLogInfo',{logged:true,
+                console.log(response.body);
+                this.logging=false;
+//                this.$store.state.logged=true;
+//                this.$store.state.loginUser=response.body.data.accountName;
+                this.$store.commit('changeLogInfo',{logged:true,
                                                     loginUser:response.body.data.accountName,
-                                                    signUpState:''
+                                                    signUpState:response.body.data.state,
+                                                    loginType:response.body.data.type,
+                                                    session:response.body.data.session
                                                     });
-                that.loginDialogClose();
-                that.$toasted.success("登录成功");
+                this.loginDialogClose();
+                this.$toasted.success("登录成功");
             }).catch(response=>{
-              that.logging=false;
+              this.logging=false;
             });
         }
       },

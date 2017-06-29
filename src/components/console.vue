@@ -9,7 +9,6 @@
         <i class="iconfont icon-2x icon-shenfenzheng1"></i>
       </mu-flat-button>
       <mu-flat-button class="big-icon-but" slot="left">
-
         <mu-badge content="12" circle color="red">
           <i class="iconfont icon-2x icon-tixing"></i>
         </mu-badge>
@@ -40,8 +39,6 @@
           <mu-circular-progress v-else :size="20" color="orange"/>
         </mu-flat-button>
       </template>
-
-
     </mu-appbar>
     <edit-dialog :show-dialog.sync="dialogVisible" :dialog-title="dialogTitle" :action-type="dialogActionType"></edit-dialog>
     <info-dialog :show-dialog.sync="infoDialogVisible"></info-dialog>
