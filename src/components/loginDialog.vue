@@ -61,7 +61,6 @@
             }
             if(vaild)return;
             this.logging=true;
-            let that=this;
             this.$store.dispatch(DispatchActions.GET_LOGIN,{
                 params:{
                     username:this.loginForm.username,
@@ -73,10 +72,10 @@
 //                this.$store.state.logged=true;
 //                this.$store.state.loginUser=response.body.data.accountName;
                 this.$store.commit('changeLogInfo',{logged:true,
-                                                    loginUser:response.body.data.accountName,
-                                                    signUpState:response.body.data.state,
-                                                    loginType:response.body.data.type,
-                                                    session:response.body.data.session
+                                                    loginUser:response.body.accountName,
+                                                    signUpState:response.body.state,
+                                                    loginType:response.body.type,
+                                                    session:response.body.session
                                                     });
                 this.loginDialogClose();
                 this.$toasted.success("登录成功");

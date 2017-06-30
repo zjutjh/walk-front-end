@@ -27,7 +27,7 @@
             <mu-td>{{item.area}}</mu-td>
             <mu-td>
               <mu-badge :color="item.payloadColor" :content="item.now_num+ '/' +item.max_num"/>
-              <mu-badge :content="(item.pre_num>10?'':'0')+item.pre_num" color="orange"/>
+              <mu-badge :content="(item.pre_num>=10?'':'0')+item.pre_num" color="orange"/>
               <mu-badge>
                 <i class="iconfont" style="font-size: 12px" :class="{'icon-lock':item.locked,'icon-unlock':!item.locked,'red-text':item.locked}"></i>
 
@@ -65,7 +65,8 @@
   </div>
 </template>
 <script>
-
+  import {DispatchActions} from '../store/';
+  import colorO from './colorGradient.js';
   export default{
       name:'GroupTable',
       props:['groupData','canOperate','currentPage','totalPage'],
@@ -95,7 +96,7 @@
         if(!this.$store.state.logged){
           this.showOperation=false;
         }
-        this.tableData=this.groupData;
+        this.getGroupByPage(1)
 
       },
       methods:{
@@ -110,14 +111,42 @@
 //            console.log(this)
         },
         getGroupByPage:function(pageIndex,isRefresh){
-            let that=this;
+//            let that=this;
             isRefresh?(this.refreshing=true):(this.loading=true);
 
-            setTimeout(function () {
+          let params={page:pageIndex};
+          this.$store.dispatch(DispatchActions.GET_GROUP,{params:params}).then(response=>{
+//              console.log(response)
+              isRefresh?(this.refreshing=false):(this.loading=false);
+              this.current=pageIndex<=this.total?pageIndex:this.total;
+              if(this.smallScreen){
+                  let addData=this.filterGroupData(response.body);
+                  for(let i in addData){
+                    this.tableData.push(addData[i]);
+                  }
+              }else{
+                this.tableData=this.filterGroupData(response.body);
+              }
+            }
+          )
 //              console.log(pageIndex);
-              isRefresh?(that.refreshing=false):(that.loading=false);
-              that.current=pageIndex<=that.total?pageIndex:that.total;
-            },2000)
+
+
+        },
+        filterGroupData(val){
+          let cRed="#F44336";
+          let cGreen="#4CAF50";
+          for (let i in val){
+            let group=val[i];
+            val[i].payloadColor=colorO.getColorByPercent(cGreen,cRed,parseInt(((group.now_num-1)/(group.max_num-1))*100))
+
+            if(group.now_num>=group.max_num||group.locked){
+              val[i].isDisable=true;
+            }else{
+              val[i].isDisable=false;
+            }
+          }
+          return val;
         },
         refresh(){
             let page=this.smallScreen?1:this.current;

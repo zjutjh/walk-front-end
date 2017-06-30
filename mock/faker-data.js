@@ -25,12 +25,19 @@ module.exports = function () {
         session:faker.random.uuid(),
       }
     },
-    group:_.times(100, function (n) {
+    "group-list":{
+      code:200,
+      data:_.times(20, function (n) {
       return {
-        id: n,
-        name: faker.name.findName(),
-        avatar: faker.internet.avatar()
+          id: n,
+          description:faker.company.companyName(),
+          area:'朝晖',
+          max_num:(faker.random.number()%3)+1,
+          now_num:(faker.random.number()%3)+1,
+          pre_num:(faker.random.number()%20),
+          locked:(faker.random.number()%2)
       }
     }),
+    }
   }
 }

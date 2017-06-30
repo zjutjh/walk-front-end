@@ -8,8 +8,8 @@
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
     "build": "node build/build.js",
-    "mock": "json-server --watch mock/db.json --routes mock/route.json",
-    "mockfaker":"json-server mock/faker-data.js --routes mock/route.json",
+    "mock": "json-server --watch mock/db.json --routes mock/route.json -d 1500",
+    "mockfaker":"json-server mock/faker-data.js --routes mock/route.json -d 1500",
     "mockdev": "npm run mock & npm run dev",
     "no compress build": "node build/buildnocom.js"
   },

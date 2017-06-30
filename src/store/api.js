@@ -10,9 +10,9 @@ const APIS = {
     GET_ISLOGIN:'/my-walk/account',
     GET_YXNUM:'',
     GET_LOGIN:'/my-walk/login',
-    GET_GROUP:'/my-walk/group',
+    GET_GROUP:'/my-walk/group-list',
 };
-const noNeedTokenList=['get_login','get_islogin'];
+const noNeedTokenList=['get_login','get_islogin','get_group'];
 const postPrefix = ['post', 'save', 'delete'];
 //将需要post的api写上post即可
 function isPostAction(key) {
