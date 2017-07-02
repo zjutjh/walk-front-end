@@ -38,6 +38,31 @@ module.exports = function () {
           locked:(faker.random.number()%2)
       }
     }),
+    },
+    'group-info':{
+      code:200,
+      data:{
+        leader:{
+          name:faker.name.findName(),
+          qq:faker.random.number(),
+          phone:faker.phone.phoneNumber('1##########'),
+        },
+        teammate:_.times(3,function (n) {
+          return{
+            name:faker.name.findName(),
+            qq:faker.random.number(),
+            phone:faker.phone.phoneNumber('1##########'),
+          }
+
+
+        })
+      }
+    },
+    idcard:{
+      code:200,
+      data:{
+        message:'身份证提交成功'
+      }
     }
   }
 }

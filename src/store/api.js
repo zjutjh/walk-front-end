@@ -10,9 +10,12 @@ const APIS = {
     GET_ISLOGIN:'/my-walk/account',
     GET_YXNUM:'',
     GET_LOGIN:'/my-walk/login',
-    GET_GROUP:'/my-walk/group-list',
+    GET_GROUPLIST:'/my-walk/group-list',
+    GET_GROUPINFO:'/my-walk/group-info',
+    POST_IDCARD:'/my-walk/idcard',
 };
 const noNeedTokenList=['get_login','get_islogin','get_group'];
+const noNeedActive=false;
 const postPrefix = ['post', 'save', 'delete'];
 //将需要post的api写上post即可
 function isPostAction(key) {
@@ -41,7 +44,7 @@ for (let action in APIS) {
         if(queryData.params['token']===undefined){
           queryData.params['token']=defaultQuery.params.token;
         }
-        if(!isNoNeedToken(action)){
+        if(!isNoNeedToken(action) && noNeedActive){
           if(!sessionStorage.getItem('token')){
             alert('登录已经过期，请重新登录');
             return;

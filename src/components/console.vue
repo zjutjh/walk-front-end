@@ -19,8 +19,9 @@
           <i class="iconfont icon-2x icon-xinzeng-copy"></i>
       </mu-flat-button>
       <!--如果是队员-->
-      <mu-flat-button slot="right" v-if="signUpState==='member'" @click="showGroupInfo" class="normal-icon-but">
-        <i class="iconfont icon-2x icon-chakan"></i>
+      <mu-flat-button slot="right" v-if="signUpState!=='customer'&&signUpState!==''" @click="showGroupInfo" class="normal-icon-but">
+        <i class="iconfont icon-2x icon-chakan" v-if="!infoDialogLoading"></i>
+        <mu-circular-progress v-else :size="20" color="orange"/>
       </mu-flat-button>
       <!--如果是队长-->
       <template v-if="signUpState==='leader'">
@@ -31,9 +32,9 @@
         <mu-flat-button slot="right" @click="editGroupInfo" class="normal-icon-but">
           <i class="iconfont icon-2x icon-xiugai"></i>
         </mu-flat-button>
-        <mu-flat-button slot="right" @click="showGroupInfo" class="normal-icon-but">
-          <i class="iconfont icon-2x icon-chakan"></i>
-        </mu-flat-button>
+        <!--<mu-flat-button slot="right" @click="showGroupInfo" class="normal-icon-but">-->
+          <!--<i class="iconfont icon-2x icon-chakan"></i>-->
+        <!--</mu-flat-button>-->
         <mu-flat-button slot="right"  @click="triggerLock" class="normal-icon-but">
           <i v-if="!locking" class="iconfont icon-2x" :class="{'icon-lock':isLocked,'icon-unlock':!isLocked,'red-text':isLocked}"></i>
           <mu-circular-progress v-else :size="20" color="orange"/>
@@ -41,7 +42,7 @@
       </template>
     </mu-appbar>
     <edit-dialog :show-dialog.sync="dialogVisible" :dialog-title="dialogTitle" :action-type="dialogActionType"></edit-dialog>
-    <info-dialog :show-dialog.sync="infoDialogVisible"></info-dialog>
+    <info-dialog :show-dialog.sync="infoDialogVisible" :loading.sync="infoDialogLoading"></info-dialog>
   </div>
 </template>
 <script>
@@ -63,6 +64,7 @@
               dialogTitle:'编辑',
               dialogActionType:'',
               infoDialogVisible:false,
+              infoDialogLoading:false,
               deleting:false
           }
       },
@@ -115,6 +117,7 @@
             this.showDialog('编辑队伍信息','groupInfo');
           },
           showGroupInfo(){
+            this.infoDialogLoading=true;
             this.infoDialogVisible=true;
           }
       },

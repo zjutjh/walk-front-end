@@ -1,7 +1,18 @@
 <template>
     <form >
-      <mu-text-field v-model="idcardNum" :errorText="idcardNumError" @blur="checkIdcardNum"  label="身份证号" hintText="请输入身份证号" fullWidth/><br/>
-      <mu-text-field v-model="idcardNumRepeat" :errorText="idcardNumRepeatError" @blur="checkIdcardNum" label="再次输入身份证号" hintText="请再次输入身份证号" fullWidth/><br/>
+      <mu-text-field v-model="idcardNum"
+                     :errorText="idcardNumError"
+                     @blur="checkIdcardNum"
+                     label="身份证号"
+                     hintText="请输入身份证号"
+                     fullWidth/>
+      <br/>
+      <mu-text-field v-model="idcardNumRepeat"
+                     :errorText="idcardNumRepeatError"
+                     @blur="checkIdcardNum"
+                     label="再次输入身份证号"
+                     hintText="请再次输入身份证号"
+                     fullWidth/><br/>
     </form>
 </template>
 <script>
