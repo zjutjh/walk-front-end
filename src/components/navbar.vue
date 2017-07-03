@@ -58,11 +58,7 @@
         unlogin(){
             let canUnlogin=confirm('确定要退出登录吗');
             if(canUnlogin){
-              this.$store.commit('changeLogInfo',{
-                  logged:false,
-                loginUser:'',
-                signUpState:''
-              });
+              this.$store.commit('logOut');
 
             }
 

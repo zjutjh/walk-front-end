@@ -75,8 +75,18 @@
                                                     loginUser:response.body.accountName,
                                                     signUpState:response.body.state,
                                                     loginType:response.body.type,
+                                                    userArea:response.body.area,
+                                                    userStartArea:response.body.startarea,
                                                     session:response.body.session
                                                     });
+                if(response.body.idcard){
+                  this.$store.commit('changeIdcardFilled',true);
+                }
+                let state=this.$store.state;
+                if(state.signUpState!==''&&state.signUpState!=='customer'){
+                    this.$store.commit('changeUserGroup',response.body.gid);
+                }
+
                 this.loginDialogClose();
                 this.$toasted.success("登录成功");
             }).catch(response=>{

@@ -19,9 +19,13 @@
           <i class="iconfont icon-2x icon-xinzeng-copy"></i>
       </mu-flat-button>
       <!--如果是队员-->
-      <mu-flat-button slot="right" v-if="signUpState!=='customer'&&signUpState!==''" @click="showGroupInfo" class="normal-icon-but">
+      <mu-flat-button slot="right" v-if="signUpState!=='customer'&&signUpState!==''&&signUpState!=='waiting'" @click="showGroupInfo" class="normal-icon-but">
         <i class="iconfont icon-2x icon-chakan" v-if="!infoDialogLoading"></i>
         <mu-circular-progress v-else :size="20" color="orange"/>
+      </mu-flat-button>
+      <!--如果递交了申请-->
+      <mu-flat-button slot="right" v-if="signUpState==='waiting'">
+
       </mu-flat-button>
       <!--如果是队长-->
       <template v-if="signUpState==='leader'">
@@ -48,7 +52,7 @@
 <script>
   import EditDialog from './editDialog.vue';
   import InfoDialog from "./infoDialog";
-
+  import {DispatchActions} from '../store';
   export default{
       components:{
         InfoDialog,
@@ -57,7 +61,7 @@
       name:'Console',
       data(){
           return{
-              signUpState:'leader',
+
               isLocked:true,
               locking:false,
               dialogVisible:false,
@@ -94,14 +98,14 @@
           },
           deleteGroup(){
             let canDel=confirm("确定要删除这个队伍吗？这个操作不可逆！");
-            let that=this;
             if(canDel){
                 this.deleting=true;
-
-                setTimeout(function () {
-                  that.deleting=false;
-                  that.$toasted.success('删除成功');
-                },2000);
+                this.$store.dispatch(DispatchActions.DELETE_GROUP,{params:{gid:this.$store.state.userGroup}}).then(response=>{
+                  this.deleting=false;
+                  this.$toasted.success(response.message);
+                }).catch(response=>{
+                  this.deleting=false;
+                })
             }else{
                 this.$toasted.info('用户取消了删除');
             }
@@ -122,14 +126,12 @@
           }
       },
       computed:{
-        getSignUpInfo() {
-          return this.$store.state.signUpState;
+        signUpState() {
+          return  this.$store.state.signUpState;
         }
       },
       watch:{
-        getSignUpInfo(val){
-            this.signUpState=val;
-        }
+
       }
   }
 </script>

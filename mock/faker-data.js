@@ -21,13 +21,16 @@ module.exports = function () {
       data:{
         accountName:faker.name.findName(),
         type:'passport',
-        state:'',
+        state:'leader',
+        idcard:'123',
+        area:'朝晖',
+        startarea:'朝晖',
         session:faker.random.uuid(),
       }
     },
     "group-list":{
       code:200,
-      data:_.times(120, function (n) {
+      data:_.times(20, function (n) {
       return {
           id: n,
           description:faker.company.companyName(),
@@ -49,12 +52,18 @@ module.exports = function () {
         },
         teammate:_.times(3,function (n) {
           return{
+              name:faker.name.findName(),
+              qq:faker.random.number(),
+              phone:faker.phone.phoneNumber('1##########'),
+            }
+          }),
+        preIn:_.times(3,function (n) {
+          return{
+            uid:faker.random.number(),
             name:faker.name.findName(),
             qq:faker.random.number(),
             phone:faker.phone.phoneNumber('1##########'),
           }
-
-
         })
       }
     },

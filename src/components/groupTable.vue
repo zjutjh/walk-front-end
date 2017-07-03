@@ -38,7 +38,7 @@
             <!--<mu-td>{{item.now_num}}</mu-td>-->
             <!--<mu-td>{{item.pre_num}}</mu-td>-->
             <mu-td v-if="showOperation">
-              <mu-raised-button label="加入" @click="joinGroup" :group-id="item.id" primary :disabled="item.isDisable"/>
+              <mu-raised-button label="加入" @click="joinGroup(item.id)"  primary :disabled="item.isDisable"/>
             </mu-td>
           </mu-tr>
         </mu-tbody>
@@ -103,18 +103,25 @@
         handlePageChange(newIndex) {
             this.getGroupByPage(+newIndex,false)
         },
-        joinGroup(){
-          if(!this.$store.state.idcardFilled){
+        joinGroup(event){
+            let state=this.$store.state;
+          if(!state.idcardFilled){
             alert('请先填写身份证信息');
             return;
           }
-//            console.log(this)
+          if(!state.userArea||!state.userStartArea){
+            alert('请先填写角色/校区/出发地点');
+            return;
+          }
+           this.$store.dispatch(DispatchActions.POST_JOINGROUP,{params:{gid:event}}).then(response=>{
+               this.$store.commit('changeSignUpState','waiting')
+           })
         },
         getGroupByPage:function(pageIndex,isRefresh){
 //            let that=this;
             isRefresh?(this.refreshing=true):(this.loading=true);
 
-          
+
           let params={page:pageIndex};
           this.$store.dispatch(DispatchActions.GET_GROUPLIST,{params:params}).then(response=>{
 //              console.log(response)
@@ -164,24 +171,26 @@
           }
         },
         screenResize() {
-          if(this.$mq.below(600)){
-              this.smallScreen=true;
-          }else{
-              this.smallScreen=false;
+          if (this.$mq.below(600)) {
+            this.smallScreen = true;
+          } else {
+            this.smallScreen = false;
           }
+        },
+        setSignUpState(state){
+          if(state===''||state==='customer'){
+            this.signUpState=true;
+          }else{
+            this.signUpState=false;
+          }
+
         }
+
       },
       computed:{
-        getIsLogged(){
-            return this.$store.state.logged;
-        },
-        getIsGrouped(){
-            return this.$store.state.signUpState;
-        },
         isBlur:function () {
           return ((this.loading || this.refreshing)&&!this.smallScreen);
         }
-
       },
       watch:{
         '$mq.resize': 'screenResize',
@@ -194,21 +203,18 @@
           canOperate(val){
             this.canOperation=!!val
           },
-          getIsLogged(val){
+          "$store.state.logged"(val){
 //              console.log('logged');
               this.logged=!!val;
+              this.setSignUpState(this.$store.state.signUpState);
             this.showOperation=!!val && this.canOperation && this.signUpState;
           },
-          getIsGrouped(val){
-            if(val===''||val==='customer'){
-                this.signUpState=true;
-            }else{
-                this.signUpState=false;
-            }
+          "$store.state.signUpState"(val){
+              this.setSignUpState(val);
             this.showOperation=this.logged && this.canOperation && this.signUpState;
           },
         currentPage(val){
-              this.current=+val;
+              this.current=+val
         },
         totalPage(val){
           this.total=+val;
@@ -218,3 +224,4 @@
 
   }
 </script>
+;

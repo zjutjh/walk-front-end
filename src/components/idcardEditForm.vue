@@ -51,6 +51,8 @@
               this.idcardNumRepeatError='';
               this.idcardNumError='';
               this.$emit('input',{success:true,idcard:this.idcardNum.toUpperCase()});
+          }else{
+            this.$emit('input',{success:false});
           }
         }
       },

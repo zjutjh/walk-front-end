@@ -26,7 +26,7 @@
                 :key="index"
                 :label="item"
                 :nativeValue="item"
-                v-model="char"/>
+                v-model="area"/>
             </mu-col>
             <br/>
           </template>
@@ -65,10 +65,35 @@
             startarea:''
           }
       },
+      beforeMount:function () {
+          let store=this.$store;
+          this.area=store.state.userArea;
+          this.startarea=store.state.userStartArea;
+      },
+      methods:{
+        emitValue(){
+          if(this.area!==''&&this.startarea!==''){
+            this.$emit('input',{success:true,area:this.area,startarea:this.startarea});
+          }else{
+            this.$emit('input',{success:false});
+          }
+        }
+      },
+      mounted:function () {
+        this.emitValue();
+      },
       computed:{
           isPassport:function () {
             return this.$store.state.loginType==='passport';
           }
-      }
+      },
+    watch:{
+          area(){
+            this.emitValue();
+          },
+          startarea(){
+            this.emitValue();
+          }
+    }
   }
 </script>

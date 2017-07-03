@@ -31,22 +31,16 @@
 
     },
     methods:{
-      testLogin(){
-        this.logged=this.$store.state.logged;
-      },
     },
     mounted:function () {
-      this.testLogin();
+
     },
     computed:{
-      getLogInfo() {
-        return this.$store.state.logged;
-      }
+
     },
     watch:{
-      getLogInfo(val){
+      "$store.state.logged"(val){
         this.logged=!!val;
-        this.testLogin();
       }
     },
     components:{

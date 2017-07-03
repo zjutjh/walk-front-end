@@ -50,7 +50,8 @@
 //          },2000)
         let apiName="POST_"+this.actionName.toUpperCase();
           this.$store.dispatch(DispatchActions[apiName],{params:this.formValue}).then(response=>{
-            this.$toasted.success(response.message);
+            console.log(response);
+           this.$toasted.success(response.message);
             this.loading=false;
           }).catch(response=> {
             this.loading = false;

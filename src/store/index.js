@@ -17,7 +17,10 @@ const store = new Vuex.Store({
       logged:false,//是否登录
       loginUser:'',//登录的用户名
       loginType:'',//登录的类型
+      userArea:'',
+      userStartArea:'',
       signUpState:'',//登录的角色
+      userGroup:'',
       idcardFilled:false,//身份证是否已经填写
       token:sessionStorage.getItem('token')||'',//token
 
@@ -30,7 +33,21 @@ const store = new Vuex.Store({
         state.loginUser=payload.loginUser;
         state.signUpState=payload.signUpState;
         state.loginType=payload.loginType;
+        state.userArea=payload.userArea;
+        state.userStartArea=payload.userStartArea;
         sessionStorage.setItem('token',payload.session)
+      },
+      logOut(state){
+        let setFalse=['logged','idcardFilled'];
+        for(let i in state){
+          state[i]='';
+        }
+        setFalse.each(function (name) {
+          state[name]=false;
+        })
+      },
+      changeUserGroup(state,groupId){
+        state.userGroup=groupId;
       },
       changeSignUpState(state,signUpState){
         state.signUpState=signUpState;

@@ -14,6 +14,7 @@
   </form>
 </template>
 <script>
+  import {DispatchActions} from '../store';
   export default{
       name:'groupInfoEditForm',
       props:['value'],
@@ -27,12 +28,24 @@
 
           }
       },
+      beforeMount:function () {
+          let state=this.$store.state;
+        if(state.userGroup!==''){
+            this.$store.dispatch(DispatchActions.GET_GROUPINFO,{params:{gid:state.userGroup}}).then(response=>{
+                this.form.description=response.body.description;
+                this.form.groupCount=response.body.groupCount;
+            })
+        }
+      },
       methods:{
         checkGroupCount(){
             let ok;
-            if(this.form.groupCount<2||this.form.groupCount>4){
+            console.log(this.form.groupCount);
+            if(Number(this.form.groupCount)<2||Number(this.form.groupCount)>4){
                 this.groupCountError="人数必须在2~4人";
                 ok++;
+                this.$emit('input',{success:false});
+                return;
             }
             if(!ok){
                 this.groupCountError='';

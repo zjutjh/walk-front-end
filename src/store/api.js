@@ -12,10 +12,21 @@ const APIS = {
     GET_LOGIN:'/my-walk/login',
     GET_GROUPLIST:'/my-walk/group-list',
     GET_GROUPINFO:'/my-walk/group-info',
+    GET_PERSONALINFO:'/my-walk/personal-info',
+    POST_PERSONALINFO:'/my-walk/personal-info',
     POST_IDCARD:'/my-walk/idcard',
+    POST_JOINGROUP:'/my-walk/group-save',
+    DELETE_GROUP:'/my-walk/group-delete',
+    POST_GROUPINFO:'/my-walk/group-info',
+    POST_AGREEJOIN:'/my-walk/group-agree',
+    POST_REJECTJOIN:'/my-walk/group-reject',
+    POST_CANCELJOIN:'/my-walk/group-cancel',
+
 };
 const noNeedTokenList=['get_login','get_islogin','get_group'];
+const needFilledInfo=['join_group'];
 const noNeedActive=false;
+const needFilled=true;
 const postPrefix = ['post', 'save', 'delete'];
 //将需要post的api写上post即可
 function isPostAction(key) {
@@ -31,7 +42,14 @@ function isNoNeedToken(key){
       return key===action;
     })
 }
+function isNeedFillInfo(key) {
+  key=key.toLowerCase();
+  return needFilledInfo.some(function (action) {
+    return key===action
+  })
+}
 const vueInstance = new Vue;
+
 for (let action in APIS) {
     let isPost = isPostAction(action);
     let token=sessionStorage.getItem('token')||'';
@@ -50,6 +68,7 @@ for (let action in APIS) {
             return;
           }
         }
+
         let copy4PostQuery = Object.assign({}, queryData);
         copy4PostQuery.params = {};
         var args = [].concat(isPost ? [queryData.params, copy4PostQuery] : queryData);
