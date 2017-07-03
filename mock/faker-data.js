@@ -27,7 +27,7 @@ module.exports = function () {
     },
     "group-list":{
       code:200,
-      data:_.times(20, function (n) {
+      data:_.times(120, function (n) {
       return {
           id: n,
           description:faker.company.companyName(),

@@ -114,7 +114,7 @@
 //            let that=this;
             isRefresh?(this.refreshing=true):(this.loading=true);
 
-          let params={page:pageIndex};
+          let params={_page:pageIndex,_limit:20};
           this.$store.dispatch(DispatchActions.GET_GROUP,{params:params}).then(response=>{
 //              console.log(response)
               isRefresh?(this.refreshing=false):(this.loading=false);
