@@ -11,7 +11,7 @@ const APIS = {
     GET_YXNUM:'',
     GET_LOGIN:'/my-walk/login',
     GET_GROUPLIST:'/my-walk/group-list',
-    GET_GROUPINFO:'/my-walk/group-info',
+    GET_GROUPINFO:'/my-walk/group-info/{gid}',
     GET_PERSONALINFO:'/my-walk/personal-info',
     POST_PERSONALINFO:'/my-walk/personal-info',
     POST_IDCARD:'/my-walk/idcard',
@@ -52,26 +52,23 @@ const vueInstance = new Vue;
 
 for (let action in APIS) {
     let isPost = isPostAction(action);
-    let token=sessionStorage.getItem('token')||'';
+
     let defaultQuery = {
         body  : {},
-        params: {token:token}
+        params: {}
     };
     fetchApis[action] = function (store, queryData = defaultQuery) {
         // get请求{params: {}} post请求{body:{}}
-        if(queryData.params['token']===undefined){
-          queryData.params['token']=defaultQuery.params.token;
-        }
-        if(!isNoNeedToken(action) && noNeedActive){
-          if(!sessionStorage.getItem('token')){
-            alert('登录已经过期，请重新登录');
-            return;
-          }
-        }
-
         let copy4PostQuery = Object.assign({}, queryData);
         copy4PostQuery.params = {};
         var args = [].concat(isPost ? [queryData.params, copy4PostQuery] : queryData);
+        /{(.*)}/.test(APIS[action]);
+        let key=RegExp.$1;
+        console.log(args);
+        if(key!==undefined){
+          APIS[action].replace(/{.*}/,copy4PostQuery.params[key]);
+          delete args[key];
+        }
         var promise = vueInstance.$http[isPost ? 'post' : 'get'](requestUrl+APIS[action], ...args);
         return promise;
     }

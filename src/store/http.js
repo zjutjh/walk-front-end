@@ -6,12 +6,13 @@ import VueResource from 'vue-resource';
 Vue.use(VueResource);
 // Http Global
 Vue.http.options.root = '/edu';
+
 Vue.http.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8;Access-Control-Allow-Origin:*';
 Vue.http.options.emulateJSON = true;
 const requestDebug = true;
 // interceptors
+Vue.http.headers.common['Access-Token']=sessionStorage.getItem('token');
 Vue.http.interceptors.push(function(request, next) {
-
     next((response)=>{
       // console.log(response)
         switch (response.status) {

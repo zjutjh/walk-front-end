@@ -25,6 +25,7 @@ module.exports = function () {
         idcard:'123',
         area:'朝晖',
         startarea:'朝晖',
+        gid:'1111',
         session:faker.random.uuid(),
       }
     },
