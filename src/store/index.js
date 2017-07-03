@@ -14,12 +14,12 @@ for (let actionName in apis) {
 }
 const store = new Vuex.Store({
     state: {
-      logged:false,
-      loginUser:'',
-      loginType:'',
-      signUpState:'',
-      idcardFilled:false,
-      token:sessionStorage.getItem('token')||'',
+      logged:false,//是否登录
+      loginUser:'',//登录的用户名
+      loginType:'',//登录的类型
+      signUpState:'',//登录的角色
+      idcardFilled:false,//身份证是否已经填写
+      token:sessionStorage.getItem('token')||'',//token
 
     },
     actions: actions,

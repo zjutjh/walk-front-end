@@ -18,6 +18,9 @@
           </mu-row>
         </span>
       </mu-list-item>
+
+
+
       <mu-divider/>
       <mu-sub-header >队员</mu-sub-header>
       <mu-list-item inset v-for="item,index in groupInfoShow.teammate" :key="index" :title="item.name">
@@ -36,41 +39,39 @@
           </mu-row>
         </span>
       </mu-list-item>
+
+      <template v-if="isLeader">
+        <mu-divider/>
+        <mu-sub-header>提交申请的队员</mu-sub-header>
+
+      </template>
+
     </mu-list>
   </mu-bottom-sheet>
 </template>
 <script>
-
+  import {DispatchActions} from '../store';
   export default{
     components: {
 
     },
     name:'InfoDialog',
-      props:['showDialog','groupInfo'],
+      props:['showDialog','loading'],
       data(){
           return{
             isShow:false,
             groupInfoShow:{
                 leader:{
-                    name:'112',
-                    qq:'113',
-                    phone:'114'
+                  name:'',
+                  qq:''
                 },
                 teammate:[
                   {
-                    name:'115',
-                    qq:'116',
-                    phone:'117'
-                  },{
-                    name:'118',
-                    qq:'119',
-                    phone:'120'
-                  },{
-                    name:'121',
-                    qq:'122',
-                    phone:'123'
+                      name:'',
+                    qq:''
                   }
                 ]
+
             }
           }
 
@@ -79,18 +80,33 @@
           close(){
               this.isShow=false;
               this.$emit('update:showDialog',false);
+          },
+          getGroupInfo(mustShow){
+              this.$store.dispatch(DispatchActions.GET_GROUPINFO).then(response=>{
+//                  console.log(response)
+                 this.groupInfoShow=response.body;
+                 this.$emit('update:loading',false);
+                 if(mustShow){
+                   this.isShow=true;
+                 }
+              });
           }
+        },
+      beforeMount:function () {
+//        this.getGroupInfo();
+      },
+      computed:{
+        isLeader:function () {
+          return this.$store.state.signUpState==='leader';
+        }
       },
       watch:{
           showDialog(val){
-              this.isShow=!!val;
-          },
-          groupInfo(val){
-              this.groupInfo=val;
-          },
-          deep:true,
+              if(val){
+                this.getGroupInfo(true);
+              }
 
+          },
       }
-
   }
 </script>

@@ -6,8 +6,8 @@
       <mu-circular-progress :size="90"/>
       <p>提交中...</p>
     </div>
-    <mu-flat-button slot="actions" @click="close" primary label="取消"/>
-    <mu-raised-button slot="actions" class="dialog-button" :disabled="dialogConfirmDisable" primary @click="submit" label="确定"/>
+    <mu-flat-button slot="actions" v-if="!loading" @click="close" primary label="取消"/>
+    <mu-raised-button slot="actions" v-if="!loading" class="dialog-button" :disabled="dialogConfirmDisable" primary @click="submit" label="确定"/>
   </mu-dialog>
 </template>
 <script>
@@ -30,7 +30,8 @@
           currentForm:'',
           formValue:'',
           loading:false,
-          dialogConfirmDisable:true
+          dialogConfirmDisable:true,
+          actionName:''
         }
       },
     methods:{
@@ -39,14 +40,22 @@
       },
       submit(){
           delete this.formValue.success;
-//          console.log(this.formValue);
+          console.log(this.formValue);
           this.loading=true;
           let that=this;
-          setTimeout(function () {
-              that.loading=false;
-              that.$toasted.success("提交成功");
-              that.close();
-          },2000)
+//          setTimeout(function () {
+//              that.loading=false;
+//              that.$toasted.success("提交成功");
+//              that.close();
+//          },2000)
+        let apiName="POST_"+this.actionName.toUpperCase();
+          this.$store.dispatch(DispatchActions[apiName],{params:this.formValue}).then(response=>{
+            this.$toasted.success(response.message);
+            this.loading=false;
+          }).catch(response=> {
+            this.loading = false;
+            this.dialogConfirmDisable=true;
+          });
 
       }
     },
@@ -60,6 +69,7 @@
         },
         actionType(val){
             this.currentForm=val+'EditForm';
+            this.actionName=val;
         },
         formValue(val){
           this.dialogConfirmDisable=val.success?false:true;

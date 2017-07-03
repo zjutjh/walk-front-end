@@ -114,8 +114,9 @@
 //            let that=this;
             isRefresh?(this.refreshing=true):(this.loading=true);
 
-          let params={_page:pageIndex,_limit:20};
-          this.$store.dispatch(DispatchActions.GET_GROUP,{params:params}).then(response=>{
+          
+          let params={page:pageIndex};
+          this.$store.dispatch(DispatchActions.GET_GROUPLIST,{params:params}).then(response=>{
 //              console.log(response)
               isRefresh?(this.refreshing=false):(this.loading=false);
               this.current=pageIndex<=this.total?pageIndex:this.total;
