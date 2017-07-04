@@ -61,9 +61,9 @@
             }
             if(vaild)return;
             this.logging=true;
-            this.$store.dispatch(DispatchActions.GET_LOGIN,{
+            this.$store.dispatch(DispatchActions.POST_LOGIN,{
                 params:{
-                    username:this.loginForm.username,
+                    uid:this.loginForm.username,
                     password:this.loginForm.password
                 }
             }).then(response=>{
@@ -72,12 +72,12 @@
 //                this.$store.state.logged=true;
 //                this.$store.state.loginUser=response.body.data.accountName;
                 this.$store.commit('changeLogInfo',{logged:true,
-                                                    loginUser:response.body.accountName,
-                                                    signUpState:response.body.state,
-                                                    loginType:response.body.type,
-                                                    userArea:response.body.area,
-                                                    userStartArea:response.body.startarea,
-                                                    session:response.body.session
+                                                    loginUser:response.body.accountName||'',
+                                                    signUpState:response.body.state||'',
+                                                    loginType:response.body.type||'',
+                                                    userArea:response.body.area||'',
+                                                    userStartArea:response.body.startarea||'',
+                                                    session:response.body.token||''
                                                     });
                 if(response.body.idcard){
                   this.$store.commit('changeIdcardFilled',true);

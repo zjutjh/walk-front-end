@@ -21,13 +21,16 @@
           </mu-tr>
         </mu-thead>
         <mu-tbody>
-          <mu-tr v-for="item,index in tableData"  :key="item.id" >
-            <mu-td>{{item.id}}</mu-td>
-            <mu-td>{{item.description}}</mu-td>
-            <mu-td>{{item.area}}</mu-td>
+          <mu-tr v-if="tableData.length===0">
+            <mu-td col-span="5" class="text-center">暂无数据</mu-td>
+          </mu-tr>
+          <mu-tr v-else v-for="item,index in tableData"  :key="item.id" >
+            <mu-td>{{item.id||'-'}}</mu-td>
+            <mu-td>{{item.description||'-'}}</mu-td>
+            <mu-td>{{item.area||'-'}}</mu-td>
             <mu-td>
-              <mu-badge :color="item.payloadColor" :content="item.now_num+ '/' +item.max_num"/>
-              <mu-badge :content="(item.pre_num>=10?'':'0')+item.pre_num" color="orange"/>
+              <mu-badge :color="item.payloadColor" :content="(item.nowNum||0)+ '/' +(item.maxNum||0)"/>
+              <mu-badge :content="((item.preNum||0)>=10?'':'0')+(item.preNum||0)" color="orange"/>
               <mu-badge>
                 <i class="iconfont" style="font-size: 12px" :class="{'icon-lock':item.locked,'icon-unlock':!item.locked,'red-text':item.locked}"></i>
 
@@ -136,6 +139,11 @@
                 this.tableData=this.filterGroupData(response.body);
               }
             }
+          ).catch(
+              response=>{
+                isRefresh?(this.refreshing=false):(this.loading=false);
+
+              }
           )
 //              console.log(pageIndex);
 

@@ -5,19 +5,19 @@
 import Vue from 'vue'
 import './http'
 var fetchApis = {};
-var requestUrl="http://localhost:3000";
+var requestUrl="http://wapi.louisian.net";
 const APIS = {
     GET_ISLOGIN:'/my-walk/account',
     GET_YXNUM:'',
-    GET_LOGIN:'/my-walk/login',
-    GET_GROUPLIST:'/my-walk/group-list',
+    POST_LOGIN:'/account/login',
+    GET_GROUPLIST:'/group',
     GET_GROUPINFO:'/my-walk/group-info/{gid}',
     GET_PERSONALINFO:'/my-walk/personal-info',
-    POST_PERSONALINFO:'/my-walk/personal-info',
+    PUT_PERSONALINFO:'/my-walk/personal-info',
     POST_IDCARD:'/my-walk/idcard',
     POST_JOINGROUP:'/my-walk/group-save',
     DELETE_GROUP:'/my-walk/group-delete',
-    POST_GROUPINFO:'/my-walk/group-info',
+    PUT_GROUPINFO:'/my-walk/group-info',
     POST_AGREEJOIN:'/my-walk/group-agree',
     POST_REJECTJOIN:'/my-walk/group-reject',
     POST_CANCELJOIN:'/my-walk/group-cancel',
@@ -35,23 +35,15 @@ function isPostAction(key) {
         return key.indexOf(action) == 0;
     });
 }
-
-function isNoNeedToken(key){
-    key=key.toLowerCase();
-    return noNeedTokenList.some(function (action) {
-      return key===action;
-    })
-}
-function isNeedFillInfo(key) {
+function getApiMethod(key){
   key=key.toLowerCase();
-  return needFilledInfo.some(function (action) {
-    return key===action
-  })
+  return key.split('_')[0];
 }
 const vueInstance = new Vue;
 
 for (let action in APIS) {
     let isPost = isPostAction(action);
+    let method = getApiMethod(action);
 
     let defaultQuery = {
         body  : {},
@@ -69,7 +61,7 @@ for (let action in APIS) {
           APIS[action].replace(/{.*}/,copy4PostQuery.params[key]);
           delete args[key];
         }
-        var promise = vueInstance.$http[isPost ? 'post' : 'get'](requestUrl+APIS[action], ...args);
+        var promise = vueInstance.$http[method](requestUrl+APIS[action], ...args);
         return promise;
     }
 }
