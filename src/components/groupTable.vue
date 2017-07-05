@@ -81,7 +81,7 @@
               signUpState:false,
               logged:false,
               total: 20,
-              pageSize:1,
+              pageSize:20,
               current: 1,
               loading:false,
               refreshing:false,
@@ -127,16 +127,17 @@
 
           let params={page:pageIndex};
           this.$store.dispatch(DispatchActions.GET_GROUPLIST,{params:params}).then(response=>{
-//              console.log(response)
+              console.log(response)
+              this.total=response.body.total;
               isRefresh?(this.refreshing=false):(this.loading=false);
               this.current=pageIndex<=this.total?pageIndex:this.total;
               if(this.smallScreen){
-                  let addData=this.filterGroupData(response.body);
+                  let addData=this.filterGroupData(response.body.rows);
                   for(let i in addData){
                     this.tableData.push(addData[i]);
                   }
               }else{
-                this.tableData=this.filterGroupData(response.body);
+                this.tableData=this.filterGroupData(response.body.rows);
               }
             }
           ).catch(
@@ -154,9 +155,9 @@
           let cGreen="#4CAF50";
           for (let i in val){
             let group=val[i];
-            val[i].payloadColor=colorO.getColorByPercent(cGreen,cRed,parseInt(((group.now_num-1)/(group.max_num-1))*100))
+            val[i].payloadColor=colorO.getColorByPercent(cGreen,cRed,parseInt(((+group.nowNum-1)/(Number(group.maxNum)-1))*100))
 
-            if(group.now_num>=group.max_num||group.locked){
+            if(group.nowNum>=group.maxNum||group.locked){
               val[i].isDisable=true;
             }else{
               val[i].isDisable=false;

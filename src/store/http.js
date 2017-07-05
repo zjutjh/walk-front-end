@@ -18,7 +18,7 @@ Vue.http.interceptors.push(function(request, next) {
         switch (response.status) {
             case 201:
             case 200:
-              console.log(response.body);
+              // console.log(response.body);
                 if (response.body.code===200) {
                     response.body = response.body.data;
                 } else {

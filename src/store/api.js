@@ -56,7 +56,7 @@ for (let action in APIS) {
         var args = [].concat(isPost ? [queryData.params, copy4PostQuery] : queryData);
         /{(.*)}/.test(APIS[action]);
         let key=RegExp.$1;
-        console.log(args);
+        // console.log(args);
         if(key!==undefined){
           APIS[action].replace(/{.*}/,copy4PostQuery.params[key]);
           delete args[key];
