@@ -67,28 +67,36 @@
                     password:this.loginForm.password
                 }
             }).then(response=>{
-                console.log(response.body);
-                this.logging=false;
+//                console.log(response.body);
+
 //                this.$store.state.logged=true;
 //                this.$store.state.loginUser=response.body.data.accountName;
-                this.$store.commit('changeLogInfo',{logged:true,
-                                                    loginUser:response.body.accountName||'',
-                                                    signUpState:response.body.state||'',
-                                                    loginType:response.body.type||'',
-                                                    userArea:response.body.area||'',
-                                                    userStartArea:response.body.startarea||'',
-                                                    session:response.body.token||''
-                                                    });
-                if(response.body.idcard){
-                  this.$store.commit('changeIdcardFilled',true);
-                }
-                let state=this.$store.state;
-                if(state.signUpState!==''&&state.signUpState!=='customer'){
-                    this.$store.commit('changeUserGroup',response.body.gid);
-                }
+                  this.$store.dispatch(DispatchActions.GET_USERINFO,{params:{},headers:{'Access-Token':response.body.token}}).then(userInfo=>{
+                  this.$store.commit('changeLogInfo',{
+                      logged:true,
+                    loginUid:userInfo.body.user.uid||'',
+                    loginUser:userInfo.body.user.name||'',
+                    signUpState:userInfo.body.user.status||'',
+                    loginType:userInfo.body.user.ltype||'',
+                    userArea:userInfo.body.user.area||'',
+                    userStartArea:userInfo.body.user.startarea||'',
+                    userPhone:userInfo.body.user.phone||'',
+                    userQQ:userInfo.body.user.qq||'',
+                    session:response.body.token||''
+                  });
+                  if(userInfo.body.user.idcard){
+                    this.$store.commit('changeIdcardFilled',true);
+                  }
+                  let state=this.$store.state;
+                  if(state.signUpState!==''&&state.signUpState!='0'){
+                    this.$store.commit('changeUserGroup',userInfo.body.group);
+                  }
 
-                this.loginDialogClose();
-                this.$toasted.success("登录成功");
+                  this.loginDialogClose();
+                  this.$toasted.success("登录成功");
+                  this.logging=false;
+                })
+
             }).catch(response=>{
               this.logging=false;
             });

@@ -116,8 +116,8 @@
             alert('请先填写角色/校区/出发地点');
             return;
           }
-           this.$store.dispatch(DispatchActions.POST_JOINGROUP,{params:{gid:event}}).then(response=>{
-               this.$store.commit('changeSignUpState','waiting')
+           this.$store.dispatch(DispatchActions.POST_JOINGROUP,{params:{id:event,},headers:{'Access-Token':this.$store.state.token}}).then(response=>{
+               this.$store.commit('changeSignUpState','1')
            })
         },
         getGroupByPage:function(pageIndex,isRefresh){
@@ -187,7 +187,7 @@
           }
         },
         setSignUpState(state){
-          if(state===''||state==='customer'){
+          if(state===''||state=='0'){
             this.signUpState=true;
           }else{
             this.signUpState=false;

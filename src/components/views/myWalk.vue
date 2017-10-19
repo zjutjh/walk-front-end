@@ -23,7 +23,7 @@
   export default{
     data(){
         return{
-          logged:false,
+
           groupData:[]
         }
     },
@@ -36,12 +36,11 @@
 
     },
     computed:{
-
+      logged:function () {
+        return this.$store.state.logged;
+      }
     },
     watch:{
-      "$store.state.logged"(val){
-        this.logged=!!val;
-      }
     },
     components:{
         GroupTable,

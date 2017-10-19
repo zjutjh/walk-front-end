@@ -37,16 +37,32 @@
     },
     methods:{
       testLogin(){
-          this.$store.dispatch(DispatchActions.GET_ISLOGIN).then(response=>{
-              console.log(response.body)
-            this.$store.commit('changeLogInfo',{logged:true,
-              loginUser:response.body.accountName,
-              signUpState:response.body.state,
-              loginType:response.body.type,
-              session:response.body.session
+          let token=localStorage.getItem('token');
+          this.$store.dispatch(DispatchActions.GET_USERINFO,{params:{},headers:{'Access-Token':token}}).then(userInfo=>{
+//              console.log(response.body)
+            this.$store.commit('changeLogInfo',{
+              logged:true,
+              loginUid:userInfo.body.user.uid||'',
+              loginUser:userInfo.body.user.name||'',
+              signUpState:userInfo.body.user.status||'',
+              loginType:userInfo.body.user.ltype||'',
+              userArea:userInfo.body.user.area||'',
+              userStartArea:userInfo.body.user.startarea||'',
+              userPhone:userInfo.body.user.phone||'',
+              userQQ:userInfo.body.user.qq||'',
+              session:token||''
             });
+            if(userInfo.body.user.idcard){
+              this.$store.commit('changeIdcardFilled',true);
+            }
+            let state=this.$store.state;
+            if(state.signUpState!==''&&state.signUpState!='0'){
+              this.$store.commit('changeUserGroup',userInfo.body.group);
+            }
             this.$toasted.success("登录成功");
-          }).catch()
+          }).catch(response=>{
+
+          })
       }
     },
     watch:{

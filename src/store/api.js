@@ -12,10 +12,10 @@ const APIS = {
     POST_LOGIN:'/account/login',
     GET_GROUPLIST:'/group',
     GET_GROUPINFO:'/my-walk/group-info/{gid}',
-    GET_PERSONALINFO:'/my-walk/personal-info',
-    PUT_PERSONALINFO:'/my-walk/personal-info',
+    GET_USERINFO:'/user/info',
+    PUT_PERSONALINFO:'/account/{id}',
     POST_IDCARD:'/my-walk/idcard',
-    POST_JOINGROUP:'/my-walk/group-save',
+    POST_JOINGROUP:'/group/{id}/join',
     DELETE_GROUP:'/my-walk/group-delete',
     PUT_GROUPINFO:'/my-walk/group-info',
     POST_AGREEJOIN:'/my-walk/group-agree',
@@ -23,11 +23,7 @@ const APIS = {
     POST_CANCELJOIN:'/my-walk/group-cancel',
 
 };
-const noNeedTokenList=['get_login','get_islogin','get_group'];
-const needFilledInfo=['join_group'];
-const noNeedActive=false;
-const needFilled=true;
-const postPrefix = ['post', 'save', 'delete'];
+const postPrefix = ['post', 'save', 'delete','put'];
 //将需要post的api写上post即可
 function isPostAction(key) {
     key = key.toLowerCase();
@@ -51,16 +47,30 @@ for (let action in APIS) {
     };
     fetchApis[action] = function (store, queryData = defaultQuery) {
         // get请求{params: {}} post请求{body:{}}
+      //是否需要access-token
+      // let accessToken=null;
+        // if(queryData.params['aToken']){
+        //   accessToken={headers:{
+        //     'Access-Token':queryData.params['aToken']
+        //   }}
+        //   // console.log('aToken found')
+        //   // vueInstance.$http.headers.common['Access-Token']=queryData.params['aToken'];
+        //   delete queryData.params['aToken'];
+        // };
+        //正则判断是否有{}
+        /{(.*)}/.test(APIS[action]);
+        let key=RegExp.$1;
+
+        if(key!==undefined){
+          APIS[action]=APIS[action].replace(/{.*}/,queryData.params[key]);
+          delete queryData[key];
+        }
         let copy4PostQuery = Object.assign({}, queryData);
         copy4PostQuery.params = {};
         var args = [].concat(isPost ? [queryData.params, copy4PostQuery] : queryData);
-        /{(.*)}/.test(APIS[action]);
-        let key=RegExp.$1;
-        // console.log(args);
-        if(key!==undefined){
-          APIS[action].replace(/{.*}/,copy4PostQuery.params[key]);
-          delete args[key];
-        }
+        console.log(args);
+
+
         var promise = vueInstance.$http[method](requestUrl+APIS[action], ...args);
         return promise;
     }

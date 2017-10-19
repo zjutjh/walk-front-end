@@ -15,14 +15,17 @@ for (let actionName in apis) {
 const store = new Vuex.Store({
     state: {
       logged:false,//是否登录
+      loginUid:'',
       loginUser:'',//登录的用户名
       loginType:'',//登录的类型
       userArea:'',
       userStartArea:'',
+      userPhone:'',
+      userQQ:'',
       signUpState:'',//登录的角色
       userGroup:'',
       idcardFilled:false,//身份证是否已经填写
-      token:sessionStorage.getItem('token')||'',//token
+      token:'',//token
 
     },
     actions: actions,
@@ -30,12 +33,16 @@ const store = new Vuex.Store({
       changeLogInfo(state,payload){
         // console.log(payload)
         state.logged=!!payload.logged;
+        state.loginUid=payload.loginUid;
         state.loginUser=payload.loginUser;
         state.signUpState=payload.signUpState;
         state.loginType=payload.loginType;
         state.userArea=payload.userArea;
         state.userStartArea=payload.userStartArea;
-        sessionStorage.setItem('token',payload.session)
+        state.userPhone=payload.userPhone;
+        state.userQQ=payload.userQQ;
+        state.token=payload.session;
+        localStorage.setItem('token',payload.session)
       },
       logOut(state){
         let setFalse=['logged','idcardFilled'];
@@ -54,7 +61,7 @@ const store = new Vuex.Store({
       },
       changeToken(state,token){
         state.token=token;
-        sessionStorage.setItem('token',token);
+        localStorage.setItem('token',token);
       },
       changeIdcardFilled(state,isFilled){
         state.idcardFilled=!!isFilled;

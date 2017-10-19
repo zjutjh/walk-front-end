@@ -9,7 +9,7 @@
                 :key="index"
                 :label="item"
                 :nativeValue="item"
-                v-model="area"/>
+                v-model="formValue.area"/>
             </mu-col>
             <br/>
           </template>
@@ -26,13 +26,12 @@
                 :key="index"
                 :label="item"
                 :nativeValue="item"
-                v-model="area"/>
+                v-model="formValue.area"/>
             </mu-col>
             <br/>
           </template>
         </mu-row>
       </template>
-
       <br/>
       <template>
         <h5>请选择您出发的校区</h5>
@@ -43,12 +42,17 @@
                 :key="index"
                 :label="item"
                 :nativeValue="item"
-                v-model="startarea"/>
+                v-model="formValue.startarea"/>
             </mu-col>
             <br/>
           </template>
         </mu-row>
       </template>
+      <br/>
+      <mu-text-field label="电话号码" v-model="formValue.phone" hintText="请输入电话号码" labelFloat fullWidth />
+      <br/>
+      <mu-text-field label="QQ号"  v-model="formValue.qq" hintText="请输入QQ号" labelFloat fullWidth />
+      <br/>
     </form>
 </template>
 <script>
@@ -60,40 +64,58 @@
             areaList:['朝晖','屏峰'],
             charList:['社会人士','校友','老师'],
             startAreaList:['朝晖','屏峰','自主前往'],
-            area:'',
-            char:'',
-            startarea:''
+            formValue:{
+              area:'',
+              startarea:'',
+              qq:'',
+              phone:'',
+              id:this.$store.state.loginUid,
+            },
+
           }
       },
       beforeMount:function () {
           let store=this.$store;
-          this.area=store.state.userArea;
-          this.startarea=store.state.userStartArea;
-      },
-      methods:{
-        emitValue(){
-          if(this.area!==''&&this.startarea!==''){
-            this.$emit('input',{success:true,area:this.area,startarea:this.startarea});
-          }else{
-            this.$emit('input',{success:false});
-          }
-        }
+          this.formValue.area=store.state.userArea;
+          this.formValue.startarea=store.state.userStartArea;
+          this.formValue.phone=store.state.userPhone;
+          this.formValue.qq=store.state.userQQ;
       },
       mounted:function () {
         this.emitValue();
+        this.$watch('formValue',function () {
+          this.emitValue();
+        },{
+            deep:true
+        })
+      },
+      methods:{
+        emitValue(){
+//            console.log('value changed')
+          if(this.checkObject()){
+            this.$emit('input',{success:true,...this.formValue});
+          }else{
+            this.$emit('input',{success:false});
+          }
+        },
+        checkObject(){
+          for(let i in this.formValue){
+              if(this.formValue[i]===''){
+                  return false;
+              }
+          }
+          return true;
+
+        }
       },
       computed:{
           isPassport:function () {
-            return this.$store.state.loginType==='passport';
+            return this.$store.state.loginType==='user';
           }
       },
     watch:{
-          area(){
-            this.emitValue();
-          },
-          startarea(){
-            this.emitValue();
-          }
+
+
     }
   }
 </script>

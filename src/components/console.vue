@@ -5,7 +5,7 @@
       <mu-flat-button slot="left" class="normal-icon-but" @click="editPersonalInfo" >
         <i class="iconfont icon-2x icon-xiugai"></i>
       </mu-flat-button>
-      <mu-flat-button slot="left" class="normal-icon-but" @click="editIdCard">
+      <mu-flat-button v-if="false" slot="left" class="normal-icon-but" @click="editIdCard">
         <i class="iconfont icon-2x icon-shenfenzheng1"></i>
       </mu-flat-button>
       <mu-flat-button class="big-icon-but" slot="left">
@@ -15,20 +15,20 @@
       </mu-flat-button>
 
       <!--如果是游客-->
-      <mu-flat-button slot="right" v-if="signUpState===''||signUpState==='customer'" @click="addGroup" class="normal-icon-but">
+      <mu-flat-button slot="right" v-if="signUpState===''||signUpState=='0'" @click="addGroup" class="normal-icon-but">
           <i class="iconfont icon-2x icon-xinzeng-copy"></i>
       </mu-flat-button>
       <!--如果是队员-->
-      <mu-flat-button slot="right" v-if="signUpState!=='customer'&&signUpState!==''&&signUpState!=='waiting'" @click="showGroupInfo" class="normal-icon-but">
+      <mu-flat-button slot="right" v-if="signUpState=='2'" @click="showGroupInfo" class="normal-icon-but">
         <i class="iconfont icon-2x icon-chakan" v-if="!infoDialogLoading"></i>
         <mu-circular-progress v-else :size="20" color="orange"/>
       </mu-flat-button>
       <!--如果递交了申请-->
-      <mu-flat-button slot="right" v-if="signUpState==='waiting'">
+      <mu-flat-button slot="right" v-if="signUpState=='1'">
 
       </mu-flat-button>
       <!--如果是队长-->
-      <template v-if="signUpState==='leader'">
+      <template v-if="signUpState=='3'">
         <mu-flat-button slot="right"  @click="deleteGroup" class="normal-icon-but">
           <i class="iconfont icon-2x icon-delete" v-if="!deleting"></i>
           <mu-circular-progress v-else :size="20" color="orange"/>

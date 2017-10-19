@@ -11,7 +11,7 @@ Vue.http.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;chars
 Vue.http.options.emulateJSON = true;
 const requestDebug = true;
 // interceptors
-Vue.http.headers.common['Access-Token']=sessionStorage.getItem('token');
+// Vue.http.headers.common['Access-Token']=sessionStorage.getItem('token');
 Vue.http.interceptors.push(function(request, next) {
     next((response)=>{
       // console.log(response)

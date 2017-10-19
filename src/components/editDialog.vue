@@ -48,14 +48,23 @@
 //              that.$toasted.success("提交成功");
 //              that.close();
 //          },2000)
-        let apiName="POST_"+this.actionName.toUpperCase();
+        let actionMethod='';
+        switch(this.actionName){
+          case'personalInfo':
+              actionMethod='PUT_';
+              break;
+          default:
+              actionMethod='POST_';
+        }
+        let apiName=actionMethod+this.actionName.toUpperCase();
           this.$store.dispatch(DispatchActions[apiName],{params:this.formValue}).then(response=>{
-            console.log(response);
+//            console.log(response);
            this.$toasted.success(response.message);
             this.loading=false;
           }).catch(response=> {
             this.loading = false;
             this.dialogConfirmDisable=true;
+            this.$toasted.error(response.message);
           });
 
       }

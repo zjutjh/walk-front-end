@@ -30,7 +30,7 @@
       },
       beforeMount:function () {
           let state=this.$store.state;
-        if(state.userGroup!==''){
+        if(!state.userGroup){
             this.$store.dispatch(DispatchActions.GET_GROUPINFO,{params:{gid:state.userGroup}}).then(response=>{
                 this.form.description=response.body.description;
                 this.form.groupCount=response.body.groupCount;
