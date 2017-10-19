@@ -11,9 +11,9 @@
   </mu-dialog>
 </template>
 <script>
-  import idcardEditForm from './idcardEditForm.vue';
-  import personalInfoEditForm from './personalInfoEditForm.vue';
-  import groupInfoEditForm from './groupInfoEditForm.vue';
+  import idcardEditForm from './formComponents/idcardEditForm.vue';
+  import personalInfoEditForm from './formComponents/personalInfoEditForm.vue';
+  import groupInfoEditForm from './formComponents/groupInfoEditForm.vue';
   import {DispatchActions} from '../../store/index';
   export default{
       components:{

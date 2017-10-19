@@ -14,7 +14,7 @@
   </form>
 </template>
 <script>
-  import {DispatchActions} from '../../store/index';
+  import {DispatchActions} from '../../../store/index';
   export default{
       name:'groupInfoEditForm',
       props:['value'],
