@@ -50,8 +50,8 @@
   </div>
 </template>
 <script>
-  import EditDialog from './editDialog.vue';
-  import InfoDialog from "./infoDialog";
+  import EditDialog from './dialog/editDialog.vue';
+  import InfoDialog from "./dialog/infoDialog";
   import {DispatchActions} from '../store';
   export default{
       components:{

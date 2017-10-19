@@ -20,7 +20,7 @@
   </mu-dialog>
 </template>
 <script>
-  import {DispatchActions} from '../store/';
+  import {DispatchActions} from '../../store/index';
 
   export default{
       name:"LoginDialog",

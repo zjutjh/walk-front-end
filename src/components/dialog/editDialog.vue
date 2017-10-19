@@ -14,7 +14,7 @@
   import idcardEditForm from './idcardEditForm.vue';
   import personalInfoEditForm from './personalInfoEditForm.vue';
   import groupInfoEditForm from './groupInfoEditForm.vue';
-  import {DispatchActions} from '../store/';
+  import {DispatchActions} from '../../store/index';
   export default{
       components:{
         idcardEditForm,

@@ -65,7 +65,7 @@
   </mu-bottom-sheet>
 </template>
 <script>
-  import {DispatchActions} from '../store';
+  import {DispatchActions} from '../../store/index';
   export default{
     components: {
 

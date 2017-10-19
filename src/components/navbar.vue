@@ -14,7 +14,7 @@
 </template>
 <script>
 //  import MuBottomNav from "../../node_modules/muse-ui/src/bottomNav/bottomNav";
-  import LoginDialog from "./loginDialog.vue";
+  import LoginDialog from "./dialog/loginDialog.vue";
   import routes from "../router/routeDefine.js"
   export default{
     components: {
